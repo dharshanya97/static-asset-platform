@@ -1,0 +1,8 @@
+root_domain = "example.com"
+subdomain   = "assets"
+bucket_name = "my-assets-prod-12345" # must be globally unique
+github_repo = "your-org/your-repo"
+alarm_email = "you@example.com"
+
+# Start in count mode, review WAF logs, then set to false to enforce
+waf_count_mode = true
