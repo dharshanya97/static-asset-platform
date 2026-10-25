@@ -3,9 +3,16 @@ variable "region" {
   default = "ap-south-1"
 }
 
+variable "use_custom_domain" {
+  description = "false = use the free xxxx.cloudfront.net URL. true = custom domain via Route53 + ACM."
+  type        = bool
+  default     = false
+}
+
 variable "root_domain" {
-  description = "Existing Route53 hosted zone, e.g. example.com"
+  description = "Existing Route53 public hosted zone, e.g. example.com (only used if use_custom_domain = true)"
   type        = string
+  default     = ""
 }
 
 variable "subdomain" {

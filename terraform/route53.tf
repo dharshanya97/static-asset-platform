@@ -1,5 +1,7 @@
+# Only created when use_custom_domain = true
 resource "aws_route53_record" "a" {
-  zone_id = data.aws_route53_zone.this.zone_id
+  count   = var.use_custom_domain ? 1 : 0
+  zone_id = data.aws_route53_zone.this[0].zone_id
   name    = local.fqdn
   type    = "A"
 
@@ -11,7 +13,8 @@ resource "aws_route53_record" "a" {
 }
 
 resource "aws_route53_record" "aaaa" {
-  zone_id = data.aws_route53_zone.this.zone_id
+  count   = var.use_custom_domain ? 1 : 0
+  zone_id = data.aws_route53_zone.this[0].zone_id
   name    = local.fqdn
   type    = "AAAA"
 

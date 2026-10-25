@@ -1,6 +1,11 @@
-root_domain = "example.com"
-subdomain   = "assets"
-bucket_name = "my-assets-prod-12345" # must be globally unique
+# No domain? Leave use_custom_domain = false. Your site will be at https://xxxx.cloudfront.net
+use_custom_domain = false
+
+# Only needed when use_custom_domain = true (public hosted zone must exist in Route53)
+# root_domain = "example.com"
+# subdomain   = "assets"
+
+bucket_name = "my-assets-prod-12345" # must be globally unique, lowercase
 github_repo = "your-org/your-repo"
 alarm_email = "you@example.com"
 

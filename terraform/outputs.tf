@@ -1,5 +1,5 @@
 output "site_url" {
-  value = "https://${local.fqdn}"
+  value = var.use_custom_domain ? "https://${local.fqdn}" : "https://${aws_cloudfront_distribution.this.domain_name}"
 }
 
 output "cloudfront_distribution_id" {

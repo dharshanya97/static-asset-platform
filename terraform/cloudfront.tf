@@ -58,9 +58,9 @@ resource "aws_cloudfront_distribution" "this" {
   enabled             = true
   is_ipv6_enabled     = true
   http_version        = "http2and3"
-  comment             = "Static asset delivery - ${local.fqdn}"
+  comment             = "Static asset delivery - ${var.bucket_name}"
   default_root_object = "index.html"
-  aliases             = [local.fqdn]
+  aliases             = var.use_custom_domain ? [local.fqdn] : []
   price_class         = var.price_class
   web_acl_id          = aws_wafv2_web_acl.this.arn
 
@@ -112,10 +112,22 @@ resource "aws_cloudfront_distribution" "this" {
     }
   }
 
-  viewer_certificate {
-    acm_certificate_arn      = aws_acm_certificate_validation.this.certificate_arn
-    ssl_support_method       = "sni-only"
-    minimum_protocol_version = "TLSv1.2_2021"
+  # Custom domain: ACM certificate
+  dynamic "viewer_certificate" {
+    for_each = var.use_custom_domain ? [1] : []
+    content {
+      acm_certificate_arn      = aws_acm_certificate_validation.this[0].certificate_arn
+      ssl_support_method       = "sni-only"
+      minimum_protocol_version = "TLSv1.2_2021"
+    }
+  }
+
+  # No domain: free *.cloudfront.net certificate
+  dynamic "viewer_certificate" {
+    for_each = var.use_custom_domain ? [] : [1]
+    content {
+      cloudfront_default_certificate = true
+    }
   }
 
   depends_on = [aws_s3_bucket_acl.logs]
