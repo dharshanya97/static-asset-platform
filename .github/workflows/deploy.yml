@@ -22,7 +22,7 @@ jobs:
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+            role-to-assume: arn:aws:iam::606025553712:role/dharshanya-assets-prod-4821-github-deploy
           aws-region: ap-south-1
 
       # Hashed/static assets: cache for 1 year
