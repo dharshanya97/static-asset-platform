@@ -26,10 +26,10 @@ data "aws_iam_policy_document" "github_trust" {
       variable = "token.actions.githubusercontent.com:aud"
       values   = ["sts.amazonaws.com"]
     }
-     condition {
-      test     = "StringLike"
+    condition {
+      test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repo}:*"]
+      values   = ["repo:dharshanya97@298572337/static-asset-platform@1425766830:ref:refs/heads/main"]
     }
   }
 }
